@@ -37,7 +37,7 @@ const PopUp = () => {
   const categoryList = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:7000/admin/get/all/category"
+        "http://159.65.150.199/admin/get/all/category"
       );
       setOptions(response.data.category);
       console.log(response, "Categories");
