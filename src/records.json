@@ -1,0 +1,74 @@
+[
+    {
+        "category": "Carpenter",
+        "city": "Indore",
+        "link": "http://localhost:3000/list",
+        "content": "Contentn Goes Here"
+    },
+    {
+        "category": "Painter",
+        "city": "Dewas",
+        "link": "http://localhost:3000/list",
+        "content": "Contentn Goes Here"
+    },
+    {
+        "category": "Corporator",
+        "city": "Bhopal",
+        "link": "http://localhost:3000/list",
+        "content": "Contentn Goes Here"
+    },
+    {
+        "category": "Designer",
+        "city": "Indore",
+        "link": "http://localhost:3000/list",
+        "content": "Contentn Goes Here"
+    },
+    {
+        "category": "Marketing",
+        "city": "Indore",
+        "link": "http://localhost:3000/list",
+        "content": "Contentn Goes Here"
+    },
+    {
+        "category": "Musician",
+        "city": "Dewas",
+        "link": "http://localhost:3000/list",
+        "content": "Contentn Goes Here"
+    },
+    {
+        "category": "Musician",
+        "city": "Bhopal",
+        "link": "http://localhost:3000/list",
+        "content": "Contentn Goes Here"
+    },
+    {
+        "category": "Musician",
+        "city": "Indore",
+        "link": "http://localhost:3000/list",
+        "content": "Contentn Goes Here"
+    },
+    {
+        "category": "Musician",
+        "city": "Indore",
+        "link": "http://localhost:3000/list",
+        "content": "Contentn Goes Here"
+    },
+    {
+        "category": "Musician",
+        "city": "Indore",
+        "link": "http://localhost:3000/list",
+        "content": "Contentn Goes Here"
+    },
+    {
+        "category": "Musician",
+        "city": "Indore",
+        "link": "http://localhost:3000/list",
+        "content": "Contentn Goes Here"
+    },
+    {
+        "category": "Musician",
+        "city": "Indore",
+        "link": "http://localhost:3000/list",
+        "content": "Contentn Goes Here"
+    }
+]
