@@ -37,7 +37,7 @@ const PopUp = () => {
   const categoryList = async () => {
     try {
       const response = await axios.get(
-        "159.65.150.199:7600/admin/get/all/category"
+        "http://159.65.150.199:7602/admin/get/all/category"
       );
       setOptions(response.data.category);
       console.log(response, "Categories");
@@ -221,13 +221,14 @@ const PopUp = () => {
                     >
                       <option>Select any category</option>
                       {console.log(options, "data")}
-                      {options.map((item) => {
-                        return (
-                          <>
-                            <option value={item._id}>{item.title}</option>
-                          </>
-                        );
-                      })}
+                      {options &&
+                        options.map((item) => {
+                          return (
+                            <>
+                              <option value={item._id}>{item.title}</option>
+                            </>
+                          );
+                        })}
                     </Field>
                     <ErrorMessage
                       name="category"
