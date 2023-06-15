@@ -42,6 +42,7 @@ const PopUp = () => {
       setOptions(response.data.category);
       console.log(response, "Categories");
     } catch (error) {
+      //errorors
       console.log(error);
     }
   };
