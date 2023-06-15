@@ -1,5 +1,13 @@
-// import React from "react";
-// const fannaUrl = "http://localhost:7000/user/";
-// export const Weburl = () => {
-//   User_login = fannaUrl + "login";
-// };
+import React from "react";
+const fannanUrl = "http://159.65.150.199:7602/";
+export default {
+  //User Detials
+  User_login: fannanUrl + "user/login",
+  User_registration: fannanUrl + "user/register",
+
+  //Category
+  User_Category: fannanUrl + "admin/get/all/category",
+
+  //ADmin State List
+  Admin_State: fannanUrl + "admin/get/state",
+};

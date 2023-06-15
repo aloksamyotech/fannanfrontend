@@ -6,6 +6,7 @@ const UsHeader = () => {
   const handlelogout = () => {
     console.log("logout-clicked");
     localStorage.removeItem("User");
+    localStorage.removeItem("Adminuser");
     navigate("/");
   };
   return (

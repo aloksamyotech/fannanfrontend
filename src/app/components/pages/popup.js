@@ -1,9 +1,11 @@
 import axios from "axios";
-import { ErrorMessage, Field, Form, Formik, useFormik } from "formik";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import React, { useEffect, useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-// import validationSchema from "./schema/schemas";
 import * as Yup from "yup";
+import webUrl from "../core-component/webUrl";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const PopUp = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [loginOpen, setOpen] = useState(true);
@@ -36,10 +38,8 @@ const PopUp = () => {
   const navigate = useNavigate();
   const categoryList = async () => {
     try {
-      const response = await axios.get(
-        "http://159.65.150.199:7602/admin/get/all/category"
-      );
-      setOptions(response.data);
+      const response = await axios.get(webUrl.User_Category);
+      setOptions(response.data.data);
       console.log(response, "Categories");
     } catch (error) {
       console.log(error);
@@ -72,7 +72,7 @@ const PopUp = () => {
 
   const handleSubmit = (values, { setSubmitting, resetForm }) => {
     axios
-      .post("http://localhost:7000/user/register", values) // Replace with your API endpoint
+      .post(webUrl.User_registration, values) // Replace with your API endpoint
       .then((response) => {
         console.log(response.data);
         resetForm();
@@ -92,14 +92,16 @@ const PopUp = () => {
 
   const newhandleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
-      const data = axios.post("http://localhost:7000/user/login", values);
+      const data = axios.post(webUrl.User_login, values);
       resetForm();
       console.log(data, "userDetails");
       const token = (await data).data;
+      toast.success("Login Successful");
       navigate("/user/dashboard");
       localStorage.setItem("Adminuser", JSON.stringify(token));
     } catch (error) {
       console.log(error);
+      // toast.error("Login Failed");
     }
   };
 
@@ -346,6 +348,7 @@ const PopUp = () => {
                   <input type="submit" name="Sign Up" value="Submit" />
                 </Form>
               </Formik>
+              <ToastContainer />
             </div>
           </div>
         </div>

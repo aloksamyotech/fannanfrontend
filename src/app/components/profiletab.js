@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Profieimage from "./../../assests/images/member-avatar.png";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import webUrl from "./core-component/webUrl";
 
 const Profiletb = () => {
   const [statelist, setState] = useState([]);
@@ -11,7 +12,7 @@ const Profiletb = () => {
   const fetchData = async (e) => {
     try {
       e.preventDefault();
-      const response = await axios.get("http://localhost:7000/admin/get/state");
+      const response = await axios.get(webUrl.Admin_State);
       setState(response.data.data);
       console.log(response, "statelsit");
     } catch (error) {
