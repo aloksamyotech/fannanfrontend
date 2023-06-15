@@ -39,10 +39,9 @@ const PopUp = () => {
       const response = await axios.get(
         "http://159.65.150.199:7602/admin/get/all/category"
       );
-      setOptions(response.data.category);
+      setOptions(response.data);
       console.log(response, "Categories");
     } catch (error) {
-      //errorors
       console.log(error);
     }
   };
