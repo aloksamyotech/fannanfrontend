@@ -9,5 +9,9 @@ export default {
   User_Category: fannanUrl + "admin/get/all/category",
 
   //ADmin State List
-  Admin_State: fannanUrl + "admin/get/state",
+  Admin_State: fannanUrl + "admin/get/all/state",
+  Admin_City: fannanUrl + "admin/get/city/bystate/",
+
+  //Admin Update
+  Admin_Update: fannanUrl + "user/update/profile/",
 };
