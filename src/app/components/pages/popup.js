@@ -99,6 +99,7 @@ const PopUp = () => {
       toast.success("Login Successful");
       navigate("/user/dashboard");
       localStorage.setItem("Adminuser", JSON.stringify(token));
+      // localStorage.setItem("Adminuser", JSON.stringify(token._id));
     } catch (error) {
       console.log(error);
       // toast.error("Login Failed");

@@ -3,18 +3,20 @@ import Profieimage from "./../../assests/images/member-avatar.png";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import webUrl from "./core-component/webUrl";
+import { Getuserid } from "./core-component/getuserid";
 
 const Profiletb = () => {
   const [statelist, setState] = useState([]);
   const [stateid, setStateid] = useState("");
   const [city, setCity] = useState([]);
-  const [inputValue, setInputValue] = useState("");
+  const [newdata, setNewdata] = useState("");
+  const [input, setInputValue] = useState("");
   const fetchData = async (e) => {
     try {
       e.preventDefault();
       const response = await axios.get(webUrl.Admin_State);
-      setState(response);
-      console.log(response, "statelsit");
+      setState(response.data);
+      console.log(response.data, "statelsit");
     } catch (error) {
       console.log(error);
     }
@@ -29,27 +31,22 @@ const Profiletb = () => {
   const getCity = async () => {
     try {
       const citylist = await axios.get(`${webUrl.Admin_City}${stateid}`);
-      console.log(citylist, "city list");
-      setCity(citylist);
+      setCity(citylist.data);
     } catch (error) {
       console.log(error);
     }
   };
+
+  const updateUser = async () => {
+    let userid = Getuserid();
+    console.log(userid);
+    const data = await axios.put(`${webUrl.Admin_Update}${userid}`);
+    console.log(data.data, "profileapi");
+  };
+
   useEffect(() => {
     getCity();
-    // updateUser();
-  }, [stateid]);
-
-  // const updateUser = async () => {
-  //   const data = await axios.put(
-  //     `webUrl.Admin_Update/648ab56d03305035180a1429`
-  //   );
-  //   console.log(data.data.data, "profileapi");
-  // };
-
-  const handleInputChange = (e) => {
-    setInputValue(e.target.value);
-  };
+  }, []);
 
   return (
     <>
@@ -79,7 +76,7 @@ const Profiletb = () => {
             data-bs-target="#v-pills-basic"
             type="button"
             role="tab"
-            // onClick={updateUser}
+            onClick={updateUser}
             aria-controls="v-pills-basic"
             aria-selected="false"
           >
@@ -171,8 +168,8 @@ const Profiletb = () => {
                   <input
                     type="text"
                     name="first_name"
-                    value={inputValue}
-                    onChange={handleInputChange}
+                    value={newdata.firstname}
+                    // onChange={handleInputChange}
                     placeholder="First Name"
                   />
                 </div>
@@ -210,7 +207,7 @@ const Profiletb = () => {
               </form>
               <Link
                 href="#"
-                className="next-btn"
+                classN11ame="next-btn"
                 id="v-pills-basic-tab"
                 data-bs-target="#v-pills-basic"
               >
@@ -264,7 +261,9 @@ const Profiletb = () => {
                     name="select"
                     placeholder="city"
                     id="select"
-                    onChange={(e) => handleState(e)}
+                    onChange={(e) => {
+                      handleState(e);
+                    }}
                   >
                     {console.log(statelist, "data new list")}
                     <option>Select any state</option>
@@ -284,9 +283,9 @@ const Profiletb = () => {
                     id="select"
                   >
                     {city &&
-                      city.map((item) => {
+                      city?.map((item) => {
                         return (
-                          <option key={item.stateid} value={item.stateid}>
+                          <option key={item?.stateid} value={item?.stateid}>
                             {item.name}
                           </option>
                         );
