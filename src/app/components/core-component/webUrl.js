@@ -7,11 +7,12 @@ export default {
 
   //Category
   User_Category: fannanUrl + "admin/get/all/category",
+  User_By_Category: fannanUrl + "user/get/user/category/",
 
   //ADmin State List
   Admin_State: fannanUrl + "admin/get/all/state",
   Admin_City: fannanUrl + "admin/get/city/bystate/",
 
   //Admin Update
-  Admin_Update: fannanUrl + "user/update/profile/",
+  Admin_Update: fannanUrl + `user/update/profile/`,
 };

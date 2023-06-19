@@ -95,14 +95,14 @@ const PopUp = () => {
       const data = axios.post(webUrl.User_login, values);
       resetForm();
       console.log(data, "userDetails");
-      const token = (await data).data;
+      const token = (await data).data[0];
       toast.success("Login Successful");
       navigate("/user/dashboard");
       localStorage.setItem("Adminuser", JSON.stringify(token));
-      // localStorage.setItem("Adminuser", JSON.stringify(token._id));
+      const Id = localStorage.setItem("UserId", JSON.stringify(token._id));
+      console.log(Id, "id hona");
     } catch (error) {
       console.log(error);
-      // toast.error("Login Failed");
     }
   };
 

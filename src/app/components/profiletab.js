@@ -4,13 +4,10 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import webUrl from "./core-component/webUrl";
 import { Getuserid } from "./core-component/getuserid";
-
 const Profiletb = () => {
   const [statelist, setState] = useState([]);
   const [stateid, setStateid] = useState("");
   const [city, setCity] = useState([]);
-  const [newdata, setNewdata] = useState("");
-  const [input, setInputValue] = useState("");
   const fetchData = async (e) => {
     try {
       e.preventDefault();
@@ -36,11 +33,12 @@ const Profiletb = () => {
       console.log(error);
     }
   };
+  // const userDetails = Getuserid();
+  // console.log(userDetails, "userDetals");
 
   const updateUser = async () => {
-    let userid = Getuserid();
-    console.log(userid);
-    const data = await axios.put(`${webUrl.Admin_Update}${userid}`);
+    const Id = JSON.parse(localStorage.getItem("UserId"));
+    const data = await axios.put(`${webUrl.Admin_Update}${Id}`);
     console.log(data.data, "profileapi");
   };
 
@@ -75,8 +73,8 @@ const Profiletb = () => {
             data-bs-toggle="pill"
             data-bs-target="#v-pills-basic"
             type="button"
+            onClick={Set}
             role="tab"
-            onClick={updateUser}
             aria-controls="v-pills-basic"
             aria-selected="false"
           >
@@ -168,8 +166,6 @@ const Profiletb = () => {
                   <input
                     type="text"
                     name="first_name"
-                    value={newdata.firstname}
-                    // onChange={handleInputChange}
                     placeholder="First Name"
                   />
                 </div>
@@ -207,6 +203,7 @@ const Profiletb = () => {
               </form>
               <Link
                 href="#"
+                onClick={updateUser}
                 classN11ame="next-btn"
                 id="v-pills-basic-tab"
                 data-bs-target="#v-pills-basic"
