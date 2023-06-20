@@ -15,4 +15,9 @@ export default {
 
   //Admin Update
   Admin_Update: fannanUrl + `user/update/profile/`,
+
+  //Add Post
+
+  Add_Post: fannanUrl + "user/add/post",
+  Get_Post: fannanUrl + "user/get/post/byid/",
 };

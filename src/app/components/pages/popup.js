@@ -92,14 +92,14 @@ const PopUp = () => {
 
   const newhandleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
-      const data = axios.post(webUrl.User_login, values);
+      const data = await axios.post(webUrl.User_login, values);
       resetForm();
-      console.log(data, "userDetails");
-      const token = (await data).data[0];
-      toast.success("Login Successful");
+      console.log((await data).data.data, "newuserDetails");
+      // const token = (await data).data;
+      // toast.success("Login Successful");
       navigate("/user/dashboard");
-      localStorage.setItem("Adminuser", JSON.stringify(token));
-      const Id = localStorage.setItem("UserId", JSON.stringify(token._id));
+      localStorage.setItem("Adminuser", JSON.stringify(data.data.data));
+      const Id = localStorage.setItem("UserId", JSON.stringify(data._id));
       console.log(Id, "id hona");
     } catch (error) {
       console.log(error);
