@@ -26,10 +26,6 @@ const PopUp = () => {
   const loginhandleClose = () => {
     setOpen(false);
   };
-  //   const handleChange = () => {
-  //     setId(false);
-  //     setIdt(2);
-  //   };
   const handleChangeagain = () => {
     setId(true);
     setIdt(1);
@@ -77,12 +73,10 @@ const PopUp = () => {
         console.log(response.data);
         resetForm();
         setIsOpen(true);
-        // navigate("/user/dashboard");
         localStorage.setItem("User", JSON.stringify(values));
         setIsOpen(!isOpen);
       })
       .catch((error) => {
-        // Handle error
         console.error(error);
       })
       .finally(() => {
@@ -95,8 +89,6 @@ const PopUp = () => {
       const data = await axios.post(webUrl.User_login, values);
       resetForm();
       console.log((await data).data.data, "newuserDetails");
-      // const token = (await data).data;
-      // toast.success("Login Successful");
       navigate("/user/dashboard");
       localStorage.setItem("Adminuser", JSON.stringify(data.data.data));
       const Id = localStorage.setItem("UserId", JSON.stringify(data._id));

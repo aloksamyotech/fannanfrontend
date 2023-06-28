@@ -4,19 +4,63 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import webUrl from "./core-component/webUrl";
 import { Getuserid } from "./core-component/getuserid";
+import { Button } from "react-bootstrap";
 const Profiletb = () => {
   const [statelist, setState] = useState([]);
   const [stateid, setStateid] = useState("");
   const [city, setCity] = useState([]);
-  const fetchData = async (e) => {
-    try {
-      e.preventDefault();
-      const response = await axios.get(webUrl.Admin_State);
-      setState(response.data);
-      console.log(response.data, "statelsit");
-    } catch (error) {
-      console.log(error);
-    }
+  const [edit, setEdit] = useState({
+    firstname: "",
+    lastname: "",
+    email: "",
+    phone: "",
+    base_price: 0,
+  });
+  const [ndata, setData] = useState("");
+
+  const detailmain = () => {
+    const data = JSON.parse(localStorage.getItem("Adminuser"));
+    console.log(data[0], "localdata");
+    setData(data[0]);
+    // console.log(ndata.id, "firstname");
+  };
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEdit((prev) => ({ ...prev, [name]: value }));
+    console.log(edit);
+  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(webUrl.Admin_State);
+        setState(response.data);
+        console.log(response.data, "statelsit");
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const handleApi = async () => {
+    const response = await axios.get(`${webUrl.User_get_Details}${ndata.id}`);
+    console.log(response.data.data[0], "user response");
+
+    const editdata =
+      response.data.data &&
+      response.data.data.map((item) => {
+        return {
+          firstname: item.firstname,
+          lastname: item.lastname,
+          email: item.email,
+          phone: item.phone,
+          base_price: item.base_price,
+        };
+      });
+
+    console.log(editdata);
+    setEdit(editdata[0]);
+    console.log(edit, "edit data");
   };
 
   const handleState = (event) => {
@@ -24,26 +68,28 @@ const Profiletb = () => {
     console.log(getStateid, "id");
     setStateid(getStateid);
   };
-
-  const getCity = async () => {
-    try {
-      const citylist = await axios.get(`${webUrl.Admin_City}${stateid}`);
-      setCity(citylist.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  // const userDetails = Getuserid();
-  // console.log(userDetails, "userDetals");
+  useEffect(() => {
+    const getCity = async () => {
+      try {
+        const citylist = await axios.get(`${webUrl.Admin_City}${stateid}`);
+        setCity(citylist.data);
+        console.log(citylist.data, "city");
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getCity();
+  }, [stateid]);
 
   const updateUser = async () => {
-    const Id = JSON.parse(localStorage.getItem("UserId"));
-    const data = await axios.put(`${webUrl.Admin_Update}${Id}`);
+    // const Id = JSON.parse(localStorage.getItem("UserIsd"));
+    console.log(edit);
+    const data = await axios.put(`${webUrl.Admin_Update}${ndata.id}`, edit);
     console.log(data.data, "profileapi");
   };
 
   useEffect(() => {
-    getCity();
+    detailmain();
   }, []);
 
   return (
@@ -73,10 +119,10 @@ const Profiletb = () => {
             data-bs-toggle="pill"
             data-bs-target="#v-pills-basic"
             type="button"
-            onClick={Set}
             role="tab"
             aria-controls="v-pills-basic"
             aria-selected="false"
+            onClick={handleApi}
           >
             Basic Info <i className="fa fa-arrow-right" aria-hidden="true"></i>
           </button>
@@ -87,7 +133,6 @@ const Profiletb = () => {
             data-bs-target="#v-pills-address"
             type="button"
             role="tab"
-            onClick={fetchData}
             aria-controls="v-pills-address"
             aria-selected="false"
           >
@@ -165,7 +210,9 @@ const Profiletb = () => {
                   <label htmlFor="first_name">First name</label>
                   <input
                     type="text"
-                    name="first_name"
+                    name="firstname"
+                    value={edit.firstname}
+                    onChange={handleChange}
                     placeholder="First Name"
                   />
                 </div>
@@ -173,7 +220,9 @@ const Profiletb = () => {
                   <label htmlFor="last_name">Last name</label>
                   <input
                     type="text"
-                    name="last_name"
+                    name="lastname"
+                    value={edit.lastname}
+                    onChange={handleChange}
                     placeholder="Last Name"
                     id="last_name"
                   />
@@ -183,6 +232,8 @@ const Profiletb = () => {
                   <input
                     type="email"
                     name="email"
+                    value={edit.email}
+                    onChange={handleChange}
                     placeholder="invan@gmail.com"
                     id="email"
                   />
@@ -192,24 +243,34 @@ const Profiletb = () => {
                   <input
                     type="tel"
                     name="phone"
+                    value={edit.phone}
+                    onChange={handleChange}
                     placeholder="00 2323 323"
                     id="phone"
                   />
                 </div>
                 <div className="field-input">
                   <label htmlFor="first_name">Basic Pay</label>
-                  <input type="text" name="Basic_pay" placeholder="Basic Pay" />
+                  <input
+                    type="text"
+                    name="Basic_pay"
+                    placeholder="Basic Pay"
+                    onChange={handleChange}
+                    value={edit.base_price}
+                  />
                 </div>
               </form>
-              <Link
-                href="#"
+              <button
                 onClick={updateUser}
                 classN11ame="next-btn"
-                id="v-pills-basic-tab"
-                data-bs-target="#v-pills-basic"
+                id="v-pills-avatar-tab"
+                data-bs-toggle="pill"
+                data-bs-target="#v-pills-avatar"
+                role="tab"
+                aria-controls="v-pills-avatar"
               >
                 Next
-              </Link>
+              </button>
             </div>
           </div>
           <div
@@ -266,7 +327,11 @@ const Profiletb = () => {
                     <option>Select any state</option>
                     {statelist &&
                       statelist?.map((item) => {
-                        return <option value={item?._id}>{item?.name}</option>;
+                        return (
+                          <option key={item?._id} value={item?._id}>
+                            {item?.name}
+                          </option>
+                        );
                       })}
                   </select>
                   {/* <input  type="text" name="phone" placeholder="State" id="phone"/> */}
@@ -280,13 +345,9 @@ const Profiletb = () => {
                     id="select"
                   >
                     {city &&
-                      city?.map((item) => {
-                        return (
-                          <option key={item?.stateid} value={item?.stateid}>
-                            {item.name}
-                          </option>
-                        );
-                      })}
+                      city?.map((item) => (
+                        <option key={item?.stateid}>{item?.name}</option>
+                      ))}
                   </select>
                   {/* <input  type="email" name="email" placeholder="City" id="email"/> */}
                 </div>

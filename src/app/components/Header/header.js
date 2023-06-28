@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Image from "../../../assests/images/assets/logo.png";
+import Image from "../../../assests/images/khojiapp-logo-3.png";
 import Popup from "reactjs-popup";
 import PopUp from "../pages/popup";
 import Navbar from "../navbar";

@@ -19,7 +19,9 @@ const Functionalcarousel = () => {
   };
 
   const handleClick = async (id) => {
+    const response = await axios.get(`webUrl.User_get_Details${id}`);
     navigate(`/list/${id}`);
+    console.log(response, "repsonse-data");
   };
 
   useEffect(() => {

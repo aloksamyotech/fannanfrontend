@@ -2206,6 +2206,7 @@ a.site__menu__icon {
 .place__box p {
   line-height: 1.44;
   font-size: 16px;
+  word-wrap: break-word;
 }
 .place__box:last-child {
   padding-bottom: 0;
@@ -3568,7 +3569,7 @@ a.place__comments__reply i {
   display: flex;
   margin-bottom: 30px;
 }
-.popup-form .choose-form li {
+.popup-form .choose-form li,.popup popup-form open {
   list-style: none;
   display: inline-block;
   margin-right: 20px;
@@ -7209,9 +7210,9 @@ a.place__comments__reply i {
 .place-item.layout-02 .entry-head {
   font-size: 16px;
   line-height: 1.5;
-  /* display: -webkit-box; */
+  display: -webkit-box;
   /* display: -ms-flexbox; */
-  display: block;
+  /* display: block; */
   align-items: center;
   flex-wrap: wrap;
   margin-bottom: 5px;
@@ -7237,7 +7238,7 @@ a.place__comments__reply i {
   margin-bottom: 0;
 }
 .place-item.layout-02 .place-title {
-  font-size: 20px;
+  font-size: 15px;
   font-weight: 500;
   line-height: 1.4;
   margin-bottom: 15px;
@@ -12066,7 +12067,7 @@ a.Add-to-cart-btn {
   margin-bottom: 20px;
 }
 .post-discription {
-  margin-top: 30px;
+  margin-top: 15px;
 }
 .post-category h6 {
   display: inline-block;
@@ -12088,7 +12089,7 @@ a.Add-to-cart-btn {
   line-height: 35px;
 }
 .post-top {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 .post-wrp .col-md-12 {
   margin-bottom: 25px;
@@ -12764,4 +12765,18 @@ button.Post-submit {
   padding: 10px 30px;
   border: 1px solid #000;
   border-radius: 24px;
+}
+.site__brand__logo img {
+  max-width: 55% !important;
+  width: 55% !important;
+}
+.post-block {
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+.post-image {
+  padding-top: 10px;
+}
+
+.bg-danger-new {
+  fill: #dc3545 !important;
 }

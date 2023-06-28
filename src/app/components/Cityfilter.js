@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Listimage from "./../../assests/images/avatars/male-1.jpg";
 import Categories from "./Categories";
 import Location from "./Location";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import webUrl from "./core-component/webUrl";
 const Dropdown = (props) => {
@@ -32,16 +32,26 @@ const Dropdown = (props) => {
     setViewMode("list");
   };
 
+  const navigate = useNavigate("");
+
   const setGridView = () => {
     setViewMode("grid");
   };
+
+  const handleClick = async (id) => {
+    navigate(`/Artist/${id}`);
+  };
+
+  const [totalCount, setTotalCount] = useState(0);
 
   const [user, setUser] = useState([]);
   const apirun = async () => {
     const data = await axios.get(`${webUrl.User_By_Category}${props.id}`);
     setUser(data.data.data);
+    setTotalCount(data.data.data.length);
     console.log(user, "user details");
   };
+
   useEffect(() => {
     apirun();
   }, []);
@@ -263,7 +273,7 @@ const Dropdown = (props) => {
         <div className="top-area top-area-filter">
           <div className="filter-left">
             <span className="result-count">
-              <span className="count">24</span> results
+              <span className="count">{totalCount}</span> results
             </span>
             <Link className="clear">Clear filter</Link>
           </div>
@@ -330,8 +340,12 @@ const Dropdown = (props) => {
                       >
                         <div className="place-inner">
                           <div className="place-thumb">
-                            <Link to="/Artist">
-                              <img src={Listimage} alt="" />
+                            <Link to={`/Artist/${item._id}`}>
+                              <img
+                                src={Listimage}
+                                alt=""
+                                onClick={() => handleClick(item._id)}
+                              />
                             </Link>
                             <Link
                               href="#"
@@ -360,23 +374,17 @@ const Dropdown = (props) => {
                                   href="#"
                                   style={{ textTransform: "capitalize" }}
                                 >
-                                  {item.category}
+                                  {item?.category}
                                 </Link>
                               </div>
                             </div>
                             <h3 className="place-title">
-                              <a
-                                href="single-1.html"
-                                style={{ textTransform: "capitalize" }}
-                              >
-                                {item.firstname}
-                              </a>
-                              <a
-                                href="single-1.html"
-                                style={{ textTransform: "capitalize" }}
-                              >
-                                {item.lastname}
-                              </a>
+                              <Link style={{ textTransform: "capitalize" }}>
+                                {item?.firstname}
+                              </Link>
+                              <Link style={{ textTransform: "capitalize" }}>
+                                {item?.lastname}
+                              </Link>
                             </h3>
                             <div className="open-now">
                               <i className="las la-door-open"></i>Open now
@@ -417,8 +425,12 @@ const Dropdown = (props) => {
                     >
                       <div className="place-inner">
                         <div className="place-thumb">
-                          <Link to="/Artist">
-                            <img src={Listimage} alt="" />
+                          <Link to={`/Artist/${item._id}`}>
+                            <img
+                              src={Listimage}
+                              alt=""
+                              onClick={() => handleClick(item._id)}
+                            />
                           </Link>
                           <Link
                             href="#"
@@ -431,7 +443,7 @@ const Dropdown = (props) => {
                           </Link>
                           <Link href="#" className="entry-category rosy-pink">
                             <i className="las la-utensils"></i>
-                            <span>{item.firstname}</span>
+                            <span>{item?.firstname}</span>
                           </Link>
                           <Link href="#" title="Author" className="author">
                             <img src={Listimage} alt="Author" />
@@ -440,14 +452,14 @@ const Dropdown = (props) => {
                         <div className="entry-detail">
                           <div className="entry-head">
                             <div className="place-type list-item">
-                              <span>Restaurant</span>
+                              <span>{item?.firstname}</span>
                             </div>
                             <div className="place-city">
-                              {/* <a href="#">{location}</a> */}
+                              <Link href="#">{item?.category}</Link>
                             </div>
                           </div>
                           <h3 className="place-title">
-                            {/* <a href="single-1.html">{title}</a> */}
+                            <a href="single-1.html">{item?.email}</a>
                           </h3>
                           <div className="open-now">
                             <i className="las la-door-open"></i>Open now

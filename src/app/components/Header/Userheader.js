@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Image from "../../../assests/images/assets/logo.png";
+import Image from "../../../assests/images/khojiapp-logo-3.png";
 const UsHeader = () => {
   const navigate = useNavigate();
   const handlelogout = () => {

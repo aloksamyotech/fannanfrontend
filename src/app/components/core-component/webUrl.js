@@ -4,6 +4,7 @@ export default {
   //User Detials
   User_login: fannanUrl + "user/login",
   User_registration: fannanUrl + "user/register",
+  User_get_Details: fannanUrl + "user/get/details/",
 
   //Category
   User_Category: fannanUrl + "admin/get/all/category",
@@ -20,4 +21,10 @@ export default {
 
   Add_Post: fannanUrl + "user/add/post",
   Get_Post: fannanUrl + "user/get/post/byid/",
+
+  //Add Like
+  Get_Like: fannanUrl + "user/add/post/like/",
+
+  //Get Comment
+  Get_Comment: fannanUrl + "user/get/comment/bypostid/",
 };
