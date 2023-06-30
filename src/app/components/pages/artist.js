@@ -366,7 +366,7 @@ const Artist = () => {
                   </div>
                 </div>
 
-                {/* <div className="place__box place__box--reviews">
+                <div className="place__box place__box--reviews">
                   <h3 className="place__title--reviews">
                     {" "}
                     Review (3){" "}
@@ -546,7 +546,7 @@ const Artist = () => {
                       </div>
                     </form>
                   </div>
-                </div> */}
+                </div>
                 <div className="place__box">
                   <h3>FAQ's</h3>
                   <div

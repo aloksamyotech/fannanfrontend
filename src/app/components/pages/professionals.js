@@ -15,11 +15,13 @@ const Professional = () => {
     const response = await axios.get(webUrl.User_Category);
     console.log(response.data.data, "category");
     setCategories(response.data.data);
-    setSelectedCategoryId(response.data.data.id);
+    setSelectedCategoryId(response.data.data._id);
 
-    const postapi = await axios.get(`${webUrl.Get_Post}${selectedCategoryId}`);
-    console.log(postapi, "post detils");
-    postsDetails(postapi, "detisl");
+    const postapi = await axios.get(
+      `${webUrl.User_By_Category}${selectedCategoryId}`
+    );
+    console.log(postapi.data.data, "post detils");
+    postsDetails(postapi.data.data, "detisl");
   };
 
   useEffect(() => {
@@ -42,39 +44,73 @@ const Professional = () => {
                   <div className="col-md-9 text-left">
                     <h1>{item.title}</h1>
                   </div>
-                  <div className="category-block">
-                    <CategoryBlock />
+                  <div className="category-block row">
+                    {posts.map((postitem) => {
+                      return (
+                        <div className="col-lg-3 col-md-6">
+                          <div class="place-item layout-02 place-hover">
+                            <div class="place-inner">
+                              <div class="place-thumb">
+                                <Link to="/Artist" class="entry-thumb">
+                                  <img
+                                    src="/static/media/07.6e62f3fa86eebcd21e01.jpg"
+                                    alt=""
+                                  />
+                                </Link>
+                                <a href="#" title="Author" class="author">
+                                  <img
+                                    src="/static/media/male-4.781d47d9995f2df3dd6a.jpg"
+                                    alt="Author"
+                                  />
+                                </a>
+                              </div>
+                              <div class="entry-detail text-left">
+                                <div class="entry-head">
+                                  <div class="place-type list-item">
+                                    <span>{postitem.firstname}</span>
+                                  </div>
+                                  <div class="place-city">
+                                    <a href="#"></a>
+                                  </div>
+                                </div>
+                                <h3 class="place-title">
+                                  <a href="04_place-details-1.html"></a>
+                                </h3>
+                                <div className="folow-section">
+                                  <div className="follower-block">
+                                    <h4>{postitem.firstname}</h4>
+                                    <h3>Software</h3>
+                                  </div>
+                                  <div className="posts-block">
+                                    <h4>Harhsit</h4>
+                                    <h3>Mehta</h3>
+                                  </div>
+                                </div>
+                                <div class="entry-bottom">
+                                  <div class="place-preview">
+                                    <div class="place-rating">
+                                      <span>5.0</span>
+                                      <i class="la la-star"></i>
+                                    </div>
+                                    <span class="count-reviews">
+                                      (2 Reviews)
+                                    </span>
+                                  </div>
+                                  <div class="place-price">
+                                    <span>$$</span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               </>
             );
           })}
-          <div className="row" id="test2">
-            <div className="col-md-9 text-left">
-              <h1>Carpenter Designers</h1>
-            </div>
-            <div className="col-md-3 text-right">
-              <a href="#" className="View-all">
-                View All
-              </a>
-            </div>
-          </div>
-          <div className="category-block">
-            <CategoryBlock />
-          </div>
-          <div className="row" id="test2">
-            <div className="col-md-9 text-left">
-              <h1>Carpenter Designers</h1>
-            </div>
-            <div className="col-md-3 text-right">
-              <a href="#" className="View-all">
-                View All
-              </a>
-            </div>
-          </div>
-          <div className="category-block">
-            <CategoryBlock />
-          </div>
         </div>
       </div>
     </>

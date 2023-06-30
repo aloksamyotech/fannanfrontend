@@ -21,10 +21,15 @@ export default {
 
   Add_Post: fannanUrl + "user/add/post",
   Get_Post: fannanUrl + "user/get/post/byid/",
+  Get_all_post: fannanUrl + "user/get/all/post",
 
   //Add Like
   Get_Like: fannanUrl + "user/add/post/like/",
 
   //Get Comment
   Get_Comment: fannanUrl + "user/get/comment/bypostid/",
+
+  //Add Review
+
+  Add_Review: fannanUrl + "user/add/review",
 };

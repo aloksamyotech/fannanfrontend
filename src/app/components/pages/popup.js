@@ -8,7 +8,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const PopUp = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [loginOpen, setOpen] = useState(true);
+  const [loginOpen, setOpen] = useState(false);
   const [isShown] = useState(false);
   const [id, setId] = useState(true);
   const [idt, setIdt] = useState(1);

@@ -3569,7 +3569,8 @@ a.place__comments__reply i {
   display: flex;
   margin-bottom: 30px;
 }
-.popup-form .choose-form li,.popup popup-form open {
+.popup-form .choose-form li,
+.popup popup-form open {
   list-style: none;
   display: inline-block;
   margin-right: 20px;
@@ -12068,6 +12069,7 @@ a.Add-to-cart-btn {
 }
 .post-discription {
   margin-top: 15px;
+  margin-bottom: 25px;
 }
 .post-category h6 {
   display: inline-block;
@@ -12779,4 +12781,33 @@ button.Post-submit {
 
 .bg-danger-new {
   fill: #dc3545 !important;
+}
+.edit-block {
+  float: right;
+  top: 12px;
+  position: relative;
+  right: 0;
+}
+.edit-block i {
+  margin-left: 30px;
+}
+.categoryblock {
+  background-color: #ececec;
+  padding: 20px;
+  border-radius: 23px;
+  width: 170px;
+  display: inline-block;
+  margin-left: 20px;
+}
+.Categrory-wrp.bg-white {
+  padding-bottom: 80px;
+}
+.titlepost div {
+  cursor: pointer;
+}
+.star.active {
+  fill: #500c33 !important;
+}
+.rate span {
+    margin-right: 10px;
 }

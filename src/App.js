@@ -74,7 +74,7 @@ function App() {
           <Route path="/howitworks" element={<Howitwork />}></Route>
           <Route path="/partners" element={<Partner />}></Route>
           <Route path="/contactus" element={<Contactus />}></Route>
-          <Route path="/userpage" element={<UserPage />}></Route>
+          <Route path="/userpage/:userid" element={<UserPage />}></Route>
         </Routes>
         <Footer />
         <LandingBanner />

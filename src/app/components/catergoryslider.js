@@ -14,7 +14,7 @@ const Functionalcarousel = () => {
 
   const carouselFunction = async () => {
     const data = await axios.get(webUrl.User_Category);
-    console.log(data, "data");
+    console.log(data.data.data, "data");
     setCarouseldata(data.data.data);
   };
 
@@ -32,22 +32,37 @@ const Functionalcarousel = () => {
     <>
       <div className="Categrory-wrp bg-white">
         <div className="container">
-          <OwlCarousel className="owl-theme" margin={10} nav items={6}>
-            {carouseldata &&
-              carouseldata?.map((item) => {
-                return (
-                  <>
-                    <Link to={`/list/${item._id}`}>
-                      <div key={item.id} onClick={() => handleClick(item._id)}>
-                        <img src={item.image} alt="categrory-image" />
-                        <h2 className="category-title">{item.title}</h2>
-                        <p>{item.description}</p>
-                      </div>
-                    </Link>
-                  </>
-                );
-              })}
-          </OwlCarousel>
+          {/* <OwlCarousel className="owl-theme" margin={10} nav items={6}> */}
+          {carouseldata &&
+            carouseldata?.map((item, index) => {
+              return (
+                <>
+                  <Link to={`/list/${item._id}`}>
+                    <div
+                      key={item.id}
+                      onClick={() => handleClick(item._id)}
+                      className="categoryblock"
+                    >
+                      {index % 3 === 0 ? (
+                        <i class="fa-solid fa-plug"></i>
+                      ) : index % 5 === 1 ? (
+                        <i class="fa-solid fa-ruler"></i>
+                      ) : index % 5 === 2 ? (
+                        <i class="fa-solid fa-car"></i>
+                      ) : index % 5 === 3 ? (
+                        <i class="fa-duotone fa-flower-daffodil"></i>
+                      ) : (
+                        <i class="fa-solid fa-paint-roller"></i>
+                      )}
+                      {/* <img src={item.image} alt="categrory-image" /> */}
+                      <h2 className="category-title">{item.title}</h2>
+                      <p>{item.description}</p>
+                    </div>
+                  </Link>
+                </>
+              );
+            })}
+          {/* </OwlCarousel> */}
         </div>
       </div>
     </>
