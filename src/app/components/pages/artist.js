@@ -54,7 +54,7 @@ const Artist = () => {
                         (3 reviews)
                       </span>
                     </div>
-                    <div className="place__currency">$$</div>
+                    <div className="place__currency">${data.base_price}</div>
                     <div className="place__category">
                       <Link title="Restaurant" href="#">
                         {data.category}

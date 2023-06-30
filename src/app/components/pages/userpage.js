@@ -23,6 +23,7 @@ const Userpage = () => {
   const { userid } = useParams();
   console.log(userid, "id id here...");
   const [rating, setRating] = useState(0);
+  const [review, setReview] = useState("");
 
   const userApi = async () => {
     const response = await axios.get(`${webUrl.User_get_Details}${userid}`);
@@ -34,12 +35,16 @@ const Userpage = () => {
     setRating(selectedRating);
   };
 
+  const handleReviewChange = (event) => {
+    setReview(event.target.value);
+  };
+
   const revewApi = async (event) => {
     event.preventDefault();
     const data = {
       userid: userid,
       rate: rating,
-      review: "",
+      review: review,
     };
     const response = await axios.post(webUrl.Add_Review, { data });
     console.log(response, "review data");
@@ -47,7 +52,7 @@ const Userpage = () => {
 
   useEffect(() => {
     userApi();
-  });
+  }, []);
   return (
     <>
       <UsHeader />
@@ -58,7 +63,9 @@ const Userpage = () => {
             <div className="col-lg-8 text-left">
               <div className="place__left">
                 <div className="place__box place__box--npd">
-                  <h1>{/* {data.firstname} {data.lastname} */}</h1>
+                  <h1>
+                    {data.firstname} {data.lastname}
+                  </h1>
                   <div className="place__meta">
                     <div className="place__reviews reviews">
                       <span className="place__reviews__number reviews__number">
@@ -69,7 +76,7 @@ const Userpage = () => {
                         (3 reviews)
                       </span>
                     </div>
-                    <div className="place__currency">$$</div>
+                    <div className="place__currency">${data.base_price}</div>
                     <div className="place__category">
                       <Link title="Restaurant" href="#">
                         {/* {data.category} */}
@@ -539,6 +546,8 @@ const Userpage = () => {
                         />
                         <textarea
                           name="review_text"
+                          value={review}
+                          onChange={handleReviewChange}
                           placeholder="Write a review"
                         ></textarea>
                       </div>
