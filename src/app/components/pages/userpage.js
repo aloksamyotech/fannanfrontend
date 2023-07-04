@@ -86,7 +86,7 @@ const Userpage = () => {
                         (3 reviews)
                       </span>
                     </div>
-                    <div className="place__currency">${data.base_price}</div>
+                    <div className="place__currency">₹{' '+ data.base_price}</div>
                     <div className="place__category">
                       <Link title="Restaurant" href="#">
                         {/* {data.category} */}
@@ -585,6 +585,7 @@ const Userpage = () => {
                             data-cfemail="ec85828a83ac8b89988b838083c28f8381"
                             className="__cf_email__"
                           >
+<<<<<<< HEAD
                             {data.email}
                           </span>
                         </a>
@@ -597,6 +598,32 @@ const Userpage = () => {
                         <i className="la la-globe large"></i>
                         <a href="http://www.barfisk.nl/" target="_blank">
                           www.barfisk.nl
+=======
+                          {data.email ? data.email : "demo@gmail.com"}
+                          </span>
+                        </a>
+                      </li>
+                      <li _ngcontent-pog-c20="">
+                        <i
+                          _ngcontent-pog-c20=""
+                          className="la la-phone large"
+                        ></i>
+                        <a _ngcontent-pog-c20="" href="tel:+31 20-235-2117">
+                          {data.phone ? data.phone : "+31 20-235-2117"}
+                        </a>
+                      </li>
+                      <li _ngcontent-pog-c20="">
+                        <i
+                          _ngcontent-pog-c20=""
+                          className="la la-globe large"
+                        ></i>
+                        <a
+                          _ngcontent-pog-c20=""
+                          href="http://www.barfisk.nl/"
+                          target="_blank"
+                        >
+                          {data.weburl ? data.webUrl : "www.khojiapp.in"}
+>>>>>>> b263ae4d36077af4e89bb982b0a28ec776ff1ee0
                         </a>
                       </li>
                     </ul>
