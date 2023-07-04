@@ -76,7 +76,7 @@ const Userpage = () => {
                         (3 reviews)
                       </span>
                     </div>
-                    <div className="place__currency">${data.base_price}</div>
+                    <div className="place__currency">₹{' '+ data.base_price}</div>
                     <div className="place__category">
                       <Link title="Restaurant" href="#">
                         {/* {data.category} */}
@@ -695,7 +695,7 @@ const Userpage = () => {
                             data-cfemail="ec85828a83ac8b89988b838083c28f8381"
                             className="__cf_email__"
                           >
-                            [email&nbsp;protected]
+                          {data.email ? data.email : "demo@gmail.com"}
                           </span>
                         </a>
                       </li>
@@ -705,7 +705,7 @@ const Userpage = () => {
                           className="la la-phone large"
                         ></i>
                         <a _ngcontent-pog-c20="" href="tel:+31 20-235-2117">
-                          +31 20-235-2117
+                          {data.phone ? data.phone : "+31 20-235-2117"}
                         </a>
                       </li>
                       <li _ngcontent-pog-c20="">
@@ -718,7 +718,7 @@ const Userpage = () => {
                           href="http://www.barfisk.nl/"
                           target="_blank"
                         >
-                          www.barfisk.nl
+                          {data.weburl ? data.webUrl : "www.khojiapp.in"}
                         </a>
                       </li>
                     </ul>
