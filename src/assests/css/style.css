@@ -2350,7 +2350,6 @@ a.site__menu__icon {
   vertical-align: middle;
 }
 .place__comments > li:last-child {
-  padding-bottom: 20px;
   border-bottom: 1px solid #eee;
 }
 .place__comments .place__author {
@@ -7973,6 +7972,7 @@ a.place__comments__reply i {
   list-style: none;
   margin-bottom: 15px;
   padding-left: 35px;
+  height: 22px;
   position: relative;
 }
 .widget-sb-detail .business-info li i {
@@ -12809,5 +12809,12 @@ button.Post-submit {
   fill: #500c33 !important;
 }
 .rate span {
-    margin-right: 10px;
+  margin-right: 10px;
+}
+textarea.text-area {
+  width: 100%;
+  resize: none;
+  margin-top: 15px;
+  border-radius: 5px;
+  height: auto;
 }

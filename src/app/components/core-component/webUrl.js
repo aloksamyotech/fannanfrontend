@@ -28,8 +28,10 @@ export default {
 
   //Get Comment
   Get_Comment: fannanUrl + "user/get/comment/bypostid/",
+  Add_Comment: fannanUrl + "user/add/comment",
 
   //Add Review
 
   Add_Review: fannanUrl + "user/add/review",
+  Get_Review: fannanUrl + "user/get/review/byuserid/",
 };

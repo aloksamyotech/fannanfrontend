@@ -27,16 +27,19 @@ const Post = (props) => {
   //     }
   //   };
 
-  const [showModal, setShowModal] = useState(false);
+  // const [showModal, setShowModal] = useState(false);
 
-  const openModal = () => {
-    setShowModal(true);
-  };
-  const loginhandleClose = () => {
-    setShowModal(false);
-  };
+  // const openModal = () => {
+  //   setShowModal(true);
+  // };
+  // const loginhandleClose = () => {
+  //   setShowModal(false);
+  // };
+  const [open, setOpen] = useState(false);
   const [details, setDetails] = useState("");
   const [ids, setIds] = useState([]);
+  const [getId, getIds] = useState("");
+  const [comment, setComment] = useState("");
   const GetPost = async () => {
     console.log(props.id, "new-id");
     const response = await axios.get(`${webUrl.Get_Post}${props.id}`);
@@ -48,41 +51,64 @@ const Post = (props) => {
     console.log(ids, "All ids");
   };
 
-  const navigate = useNavigate();
-  const validationLogin = Yup.object({
-    email: Yup.string()
-      .email("Invalid email address")
-      .required("Email is required"),
-    password: Yup.string()
-      .required("Password is required")
-      .min(8, "Password must be at least 8 characters long"),
-  });
+  // const navigate = useNavigate();
+  // const validationLogin = Yup.object({
+  //   email: Yup.string()
+  //     .email("Invalid email address")
+  //     .required("Email is required"),
+  //   password: Yup.string()
+  //     .required("Password is required")
+  //     .min(8, "Password must be at least 8 characters long"),
+  // });
 
-  const newhandleSubmit = async (values, { setSubmitting, resetForm }) => {
-    try {
-      const data = await axios.post(webUrl.User_login, values);
-      resetForm();
-      console.log((await data).data.data, "newuserDetails");
-      navigate("/user/dashboard");
-      localStorage.setItem("Adminuser", JSON.stringify(data.data.data));
-      const Id = localStorage.setItem("UserId", JSON.stringify(data._id));
-      console.log(Id, "id hona");
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const newhandleSubmit = async (values, { setSubmitting, resetForm }) => {
+  //   try {
+  //     const data = await axios.post(webUrl.User_login, values);
+  //     resetForm();
+  //     console.log((await data).data.data, "newuserDetails");
+  //     navigate("/user/dashboard");
+  //     localStorage.setItem("Adminuser", JSON.stringify(data.data.data));
+  //     const Id = localStorage.setItem("UserId", JSON.stringify(data._id));
+  //     console.log(Id, "id hona");
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  const CommetnApi = async (id) => {
-    const response = await axios.get(`${webUrl.Get_Comment}${id}`);
+  const CommetnApi = async () => {
+    const response = await axios.get(`${webUrl.Get_Comment}`);
     console.log(response, "Comment Api");
   };
-  ids.forEach((id) => {
-    CommetnApi(id);
-  });
+  // ids.forEach((id) => {
+  //   CommetnApi(id);
+  // });
+
+  const openComment = async (postId) => {
+    setOpen(!open);
+    console.log("Clicked Post ID:", postId);
+    getIds(postId);
+  };
+
+  const handleChange = (event) => {
+    setComment(event.target.value);
+  };
+
+  const commentApi = async (event) => {
+    event.preventDefault();
+    const data = {
+      userid: props.id,
+      postid: getId,
+      comment: comment,
+    };
+    const response = await axios.post(webUrl.Add_Comment, data);
+    console.log(response, "post-comment");
+    setComment("");
+    setOpen(false);
+  };
 
   useEffect(() => {
     GetPost();
-  }, [ids]);
+  }, []);
   return (
     <>
       <div className="post-wrp">
@@ -102,130 +128,35 @@ const Post = (props) => {
                         <h6>{item.date}</h6>
                       </div>
                       <div className="post-category">
-                        <h6>Post category</h6>
-                        <h6>Post category</h6>
-                        <h6>Post category</h6>
+                        <h6>{item.user_details.category}</h6>
+                        {/* <h6>Post category</h6>
+                        <h6>Post category</h6> */}
                       </div>
                       <p>{item.description}</p>
                     </div>
                     <div className="post-discription">
                       <div className="post-top">
-                        <Link href="#" onClick={openModal}>
+                        <Link href="#">
                           <AiOutlineHeart size={25} />
                           {item.like} Likes
                         </Link>
-                        <Link href="#">
+                        <Link href="#" onClick={() => openComment(item._id)}>
                           <BiComment size={25} />
                           Comments
                         </Link>
-                        {showModal ? (
-                          <div className="popup-wrp">
-                            <div className="popup popup-form open">
-                              <Link
-                                title="Close"
-                                className="popup__close"
-                                onClick={loginhandleClose}
-                              >
-                                <i className="las la-times la-24-black"></i>
-                              </Link>
-                              <ul className="choose-form">
-                                <li className="nav-signup">
-                                  <a title="Sign Up" href="#signup">
-                                    Login
-                                  </a>
-                                </li>
-                              </ul>
-                              <p className="choose-more">
-                                Continue with{" "}
-                                <Link title="Facebook" href="#" className="fb">
-                                  Facebook
-                                </Link>{" "}
-                                or{" "}
-                                <Link
-                                  title="Google"
-                                  href="#"
-                                  classNameName="gg"
-                                >
-                                  Google
-                                </Link>
-                              </p>
-                              <p className="choose-or">
-                                <span>Or</span>
-                              </p>
-
-                              <div className="popup-content">
-                                <Formik
-                                  initialValues={{
-                                    email: "",
-                                    password: "",
-                                  }}
-                                  validationSchema={validationLogin}
-                                  onSubmit={newhandleSubmit}
-                                >
-                                  <Form
-                                    className="form-sign form-content"
-                                    id="signup"
-                                  >
-                                    <div className="field-input">
-                                      <Field
-                                        type="email"
-                                        placeholder="Email"
-                                        name="email"
-                                      />
-                                      <ErrorMessage
-                                        name="email"
-                                        component="div"
-                                        className="error"
-                                      />
-                                    </div>
-                                    <div className="field-input">
-                                      <Field
-                                        type="password"
-                                        placeholder="Password"
-                                        name="password"
-                                      />
-                                      <ErrorMessage
-                                        name="password"
-                                        component="div"
-                                        className="error"
-                                      />
-                                    </div>
-                                    <div className="field-check">
-                                      <label htmlFor="accept">
-                                        <input
-                                          type="checkbox"
-                                          id="accept"
-                                          value=""
-                                        />
-                                        Accept the{" "}
-                                        <Link
-                                          title="Terms"
-                                          className="alo"
-                                          href="#"
-                                        >
-                                          Terms
-                                        </Link>{" "}
-                                        and{" "}
-                                        <Link title="Privacy Policy" href="#">
-                                          Privacy Policy
-                                        </Link>
-                                        <span className="checkmark">
-                                          <i className="fa-solid fa-check"></i>
-                                        </span>
-                                      </label>
-                                    </div>
-                                    <input
-                                      type="submit"
-                                      name="Sign Up"
-                                      value="Submit"
-                                    />
-                                  </Form>
-                                </Formik>
-                              </div>
-                            </div>
+                        {open && (
+                          <div>
+                            <form onSubmit={commentApi}>
+                              <textarea
+                                className="text-area"
+                                value={comment}
+                                onChange={handleChange}
+                              ></textarea>
+                              <button className="btn" type="submit">
+                                Submit
+                              </button>
+                            </form>
                           </div>
-                        ) : (
-                          ""
                         )}
                         {/* <Link href="#">
                           <i className="fas fa-share"></i>
@@ -235,7 +166,36 @@ const Post = (props) => {
                       <ul>
                         <li>
                           <div className="place__author">
-                            <div className="place__author__info">
+                            {item?.comment.map((commentitem) => {
+                              return (
+                                <div className="place__author__info">
+                                  <Link title="Chiemeka" href="#">
+                                    CHiakya
+                                  </Link>
+                                  {/* <div className="place__author__star">
+                                    <i className="la la-star"></i>
+                                    <i className="la la-star"></i>
+                                    <i className="la la-star"></i>
+                                    <i className="la la-star"></i>
+                                    <i className="la la-star"></i>
+                                    <span>
+                                      <i className="la la-star"></i>
+                                      <i className="la la-star"></i>
+                                      <i className="la la-star"></i>
+                                      <i className="la la-star"></i>
+                                      <i className="la la-star"></i>
+                                    </span>
+                                  </div> */}
+                                  <span className="time">
+                                    {commentitem.date}
+                                  </span>
+                                  <div className="place__comments__content">
+                                    <p>{commentitem.comment}</p>
+                                  </div>
+                                </div>
+                              );
+                            })}
+                            {/* <div className="place__author__info">
                               <Link title="Chiemeka" href="#">
                                 Chiemeka
                               </Link>
@@ -254,15 +214,11 @@ const Post = (props) => {
                                 </span>
                               </div>
                               <span className="time">October 1, 2019</span>
-                            </div>
+                            </div> */}
                           </div>
-                          <div className="place__comments__content">
-                            <p>
-                              Thank you for your kind words.It was truly very
-                              nice to meet you. I am glad to read you enjoyed
-                              the area and the cottage.
-                            </p>
-                          </div>
+                          {/* <div className="place__comments__content">
+                            <p>{commentitem.comment}</p>
+                          </div> */}
                         </li>
                       </ul>
                     </div>

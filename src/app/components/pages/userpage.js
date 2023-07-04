@@ -24,6 +24,7 @@ const Userpage = () => {
   console.log(userid, "id id here...");
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
+  const [getreview, setGetreview] = useState([]);
 
   const userApi = async () => {
     const response = await axios.get(`${webUrl.User_get_Details}${userid}`);
@@ -39,19 +40,28 @@ const Userpage = () => {
     setReview(event.target.value);
   };
 
-  const revewApi = async (event) => {
+  const reviewApi = async (event) => {
     event.preventDefault();
     const data = {
       userid: userid,
       rate: rating,
       review: review,
     };
-    const response = await axios.post(webUrl.Add_Review, { data });
+    const response = await axios.post(webUrl.Add_Review, data);
     console.log(response, "review data");
+    setRating(0);
+    setReview("");
+  };
+
+  const getreviewApi = async () => {
+    const response = await axios.get(`${webUrl.Get_Review}${userid}`);
+    console.log(response.data.data, "review response");
+    setGetreview(response.data.data);
   };
 
   useEffect(() => {
     userApi();
+    getreviewApi();
   }, []);
   return (
     <>
@@ -397,137 +407,34 @@ const Userpage = () => {
                       4.2 <i className="la la-star"></i>
                     </span>
                   </h3>
-                  <p>Selected Rating: {rating}</p>
-                  {/* <ul className="place__comments">
-                    <li>
-                      <div className="place__author">
-                        <div className="place__author__avatar">
-                          <a title="Sebastian" href="#">
-                            <img src={Artistimage} alt="" />
-                          </a>
-                        </div>
-                        <div className="place__author__info">
-                          <a title="Sebastian" href="#">
-                            Sebastian
-                          </a>
-                          <div className="place__author__star">
-                            <i className="la la-star"></i>
-                            <i className="la la-star"></i>
-                            <i className="la la-star"></i>
-                            <i className="la la-star"></i>
-                            <i className="la la-star"></i>
-                            <span>
-                              <i className="la la-star"></i>
-                              <i className="la la-star"></i>
-                              <i className="la la-star"></i>
-                              <i className="la la-star"></i>
-                              <i className="la la-star"></i>
-                            </span>
-                          </div>
-                          <span className="time">October 1, 2019</span>
-                        </div>
-                      </div>
-                      <div className="place__comments__content">
-                        <p>
-                          Went there last Saturday for the first time to watch
-                          my favorite djs (Kungs, Sam Feldet and Watermat) and
-                          really had a great experience. The atmosphere is
-                          amazing and I am going next week.
-                        </p>
-                      </div>
-                      <a
-                        title="Reply"
-                        href="#"
-                        className="place__comments__reply"
-                      >
-                        <i className="la la-comment-dots"></i> Reply{" "}
-                      </a>
-                      <ul>
-                        <li>
-                          <div className="place__author">
-                            <div className="place__author__avatar">
-                              <a title="Chiemeka" href="#">
-                                <img src={Artistimage} alt="" />
-                              </a>
-                            </div>
-                            <div className="place__author__info">
-                              <a title="Chiemeka" href="#">
-                                Chiemeka
-                              </a>
-                              <div className="place__author__star">
-                                <i className="la la-star"></i>
-                                <i className="la la-star"></i>
-                                <i className="la la-star"></i>
-                                <i className="la la-star"></i>
-                                <i className="la la-star"></i>
-                                <span>
-                                  <i className="la la-star"></i>
-                                  <i className="la la-star"></i>
-                                  <i className="la la-star"></i>
-                                  <i className="la la-star"></i>
-                                  <i className="la la-star"></i>
-                                </span>
+                  {/* <p>Selected Rating: {rating}</p> */}
+                  {getreview &&
+                    getreview.map((item) => {
+                      return (
+                        <ul className="place__comments">
+                          <li>
+                            <div className="place__author">
+                              <div className="place__author__avatar">
+                                <Link title="Sebastian">
+                                  <img src={Artistimage} alt="" />
+                                </Link>
                               </div>
-                              <span className="time">October 1, 2019</span>
+                              <div className="place__author__info">
+                                <Link title="Sebastian">Sebastian</Link>
+                                {item.rating}
+                                <span className="time">{item.date}</span>
+                              </div>
                             </div>
-                          </div>
-                          <div className="place__comments__content">
-                            <p>
-                              Thank you for your kind words.It was truly very
-                              nice to meet you. I am glad to read you enjoyed
-                              the area and the cottage.
-                            </p>
-                          </div>
-                        </li>
-                      </ul>
-                    </li>
-                    <li>
-                      <div className="place__author">
-                        <div className="place__author__avatar">
-                          <a title="Nitithorn" href="#">
-                            <img src={Artistimage} alt="" />
-                          </a>
-                        </div>
-                        <div className="place__author__info">
-                          <a title="Nitithorn" href="#">
-                            Nitithorn
-                          </a>
-                          <div className="place__author__star">
-                            <i className="la la-star"></i>
-                            <i className="la la-star"></i>
-                            <i className="la la-star"></i>
-                            <i className="la la-star"></i>
-                            <i className="la la-star"></i>
-                            <span>
-                              <i className="la la-star"></i>
-                              <i className="la la-star"></i>
-                              <i className="la la-star"></i>
-                              <i className="la la-star"></i>
-                              <i className="la la-star"></i>
-                            </span>
-                          </div>
-                          <span className="time">October 1, 2019</span>
-                        </div>
-                      </div>
-                      <div className="place__comments__content">
-                        <p>
-                          Went there last Saturday for the first time to watch
-                          my favorite djs (Kungs, Sam Feldet and Watermat) and
-                          really had a great experience.
-                        </p>
-                      </div>
-                      <a
-                        title="Reply"
-                        href="#"
-                        className="place__comments__reply"
-                      >
-                        <i className="la la-comment-dots"></i> Reply{" "}
-                      </a>
-                    </li>
-                  </ul> */}
+                            <div className="place__comments__content">
+                              <p>{item.review}</p>
+                            </div>
+                          </li>
+                        </ul>
+                      );
+                    })}
                   <div className="review-form">
                     <h3>Write a review</h3>
-                    <form onSubmit={revewApi}>
+                    <form onSubmit={reviewApi}>
                       <div className="rate">
                         <span>Rate This User</span>
                         {[1, 2, 3, 4, 5].map((star) => (
@@ -656,383 +563,229 @@ const Userpage = () => {
               </div>
             </div>
 
-            <div _ngcontent-pog-c20="" className="col-lg-4">
-              <div
-                _ngcontent-pog-c20=""
-                className="sidebar sidebar-shadow sidebar-sticky fixed"
-              >
-                <aside
-                  _ngcontent-pog-c20=""
-                  className="widget widget-sb-detail"
-                >
-                  <div _ngcontent-pog-c20="" className="widget-top">
-                    <div _ngcontent-pog-c20="" className="flex">
+            <div className="col-lg-4">
+              <div className="sidebar sidebar-shadow sidebar-sticky fixed">
+                <aside className="widget widget-sb-detail">
+                  <div className="widget-top">
+                    <div className="flex">
                       <img
-                        _ngcontent-pog-c20=""
                         src={artistimage}
                         alt="Author"
                         style={{ width: "50%", height: "50%", margin: "auto" }}
                       />
                     </div>
                   </div>
-                  <div
-                    _ngcontent-pog-c20=""
-                    className="business-info text-left"
-                  >
-                    <h4 _ngcontent-pog-c20="">Business Info</h4>
-                    <ul _ngcontent-pog-c20="">
-                      <li _ngcontent-pog-c20="">
-                        <i
-                          _ngcontent-pog-c20=""
-                          className="las la-envelope"
-                        ></i>
-                        <a
-                          _ngcontent-pog-c20=""
-                          href="https://fannanhtml.uxper.co/cdn-cgi/l/email-protection#7e171018113e191b0a19111211501d1113"
-                        >
+                  <div className="business-info text-left">
+                    <h4>Business Info</h4>
+                    <ul>
+                      <li>
+                        <i className="las la-envelope"></i>
+                        <a href="https://fannanhtml.uxper.co/cdn-cgi/l/email-protection#7e171018113e191b0a19111211501d1113">
                           <span
-                            _ngcontent-pog-c20=""
                             data-cfemail="ec85828a83ac8b89988b838083c28f8381"
                             className="__cf_email__"
                           >
-                            [email&nbsp;protected]
+                            {data.email}
                           </span>
                         </a>
                       </li>
-                      <li _ngcontent-pog-c20="">
-                        <i
-                          _ngcontent-pog-c20=""
-                          className="la la-phone large"
-                        ></i>
-                        <a _ngcontent-pog-c20="" href="tel:+31 20-235-2117">
-                          +31 20-235-2117
-                        </a>
+                      <li>
+                        <i className="la la-phone large"></i>
+                        <a href={data.phone}>{data.phone}</a>
                       </li>
-                      <li _ngcontent-pog-c20="">
-                        <i
-                          _ngcontent-pog-c20=""
-                          className="la la-globe large"
-                        ></i>
-                        <a
-                          _ngcontent-pog-c20=""
-                          href="http://www.barfisk.nl/"
-                          target="_blank"
-                        >
+                      <li>
+                        <i className="la la-globe large"></i>
+                        <a href="http://www.barfisk.nl/" target="_blank">
                           www.barfisk.nl
                         </a>
                       </li>
                     </ul>
-                    <div _ngcontent-pog-c20="" className="button-wrap">
-                      <div _ngcontent-pog-c20="" className="button">
-                        <a _ngcontent-pog-c20="" href="#" className="btn">
-                          Call Us
-                        </a>
+                    <div className="button-wrap">
+                      <div className="button">
+                        <Link className="btn">Call Us</Link>
                       </div>
-                      <div _ngcontent-pog-c20="" className="button">
-                        <a
-                          _ngcontent-pog-c20=""
-                          href="#"
-                          className="btn btn-border"
-                        >
-                          Send Message
-                        </a>
+                      <div className="button">
+                        <Link className="btn btn-border">Send Enquiry</Link>
                       </div>
                     </div>
-                    <h4 _ngcontent-pog-c20="" className="mt-4">
-                      Book this Artist
-                    </h4>
+                    <h4 className="mt-4">Book this Artist</h4>
                     <form
-                      _ngcontent-pog-c20=""
                       action="#"
                       method="POST"
                       className="form-underline mt-2"
                     >
-                      <div
-                        _ngcontent-pog-c20=""
-                        className="field-select field-date mb-2"
-                      >
-                        <span _ngcontent-pog-c20="" className="sl-icon">
-                          <i
-                            _ngcontent-pog-c20=""
-                            className="la la-calendar-alt"
-                          ></i>
+                      <div className="field-select field-date mb-2">
+                        <span className="sl-icon">
+                          <i className="la la-calendar-alt"></i>
                         </span>
                         <input
-                          _ngcontent-pog-c20=""
                           type="text"
                           placeholder="Date"
                           className="datepicker ps-4"
                         />
-                        <i
-                          _ngcontent-pog-c20=""
-                          className="la la-angle-down"
-                        ></i>
+                        <i className="la la-angle-down"></i>
                       </div>
-                      <div
-                        _ngcontent-pog-c20=""
-                        className="field-select has-sub field-time"
-                      >
-                        <span _ngcontent-pog-c20="" className="sl-icon">
-                          <i _ngcontent-pog-c20="" className="la la-clock"></i>
+                      <div className="field-select has-sub field-time">
+                        <span className="sl-icon">
+                          <i className="la la-clock"></i>
                         </span>
                         <input
-                          _ngcontent-pog-c20=""
                           type="text"
                           placeholder="Time"
                           readonly=""
                           className="ps-4"
                         />
-                        <i
-                          _ngcontent-pog-c20=""
-                          className="la la-angle-down"
-                        ></i>
-                        <div _ngcontent-pog-c20="" className="field-sub">
-                          <ul _ngcontent-pog-c20="">
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                12:00 AM
-                              </a>
+                        <i className="la la-angle-down"></i>
+                        <div className="field-sub">
+                          <ul>
+                            <li>
+                              <a href="#">12:00 AM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                12:30 AM
-                              </a>
+                            <li>
+                              <a href="#">12:30 AM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                1:00 AM
-                              </a>
+                            <li>
+                              <a href="#">1:00 AM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                1:30 AM
-                              </a>
+                            <li>
+                              <a href="#">1:30 AM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                2:00 AM
-                              </a>
+                            <li>
+                              <a href="#">2:00 AM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                2:30 AM
-                              </a>
+                            <li>
+                              <a href="#">2:30 AM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                3:00 AM
-                              </a>
+                            <li>
+                              <a href="#">3:00 AM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                3:30 AM
-                              </a>
+                            <li>
+                              <a href="#">3:30 AM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                4:00 AM
-                              </a>
+                            <li>
+                              <a href="#">4:00 AM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                4:30 AM
-                              </a>
+                            <li>
+                              <a href="#">4:30 AM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                5:00 AM
-                              </a>
+                            <li>
+                              <a href="#">5:00 AM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                5:30 AM
-                              </a>
+                            <li>
+                              <a href="#">5:30 AM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                6:00 AM
-                              </a>
+                            <li>
+                              <a href="#">6:00 AM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                6:30 AM
-                              </a>
+                            <li>
+                              <a href="#">6:30 AM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                7:00 AM
-                              </a>
+                            <li>
+                              <a href="#">7:00 AM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                7:30 AM
-                              </a>
+                            <li>
+                              <a href="#">7:30 AM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                8:00 AM
-                              </a>
+                            <li>
+                              <a href="#">8:00 AM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                8:30 AM
-                              </a>
+                            <li>
+                              <a href="#">8:30 AM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                9:00 AM
-                              </a>
+                            <li>
+                              <a href="#">9:00 AM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                9:30 AM
-                              </a>
+                            <li>
+                              <a href="#">9:30 AM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                10:00 AM
-                              </a>
+                            <li>
+                              <a href="#">10:00 AM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                10:30 AM
-                              </a>
+                            <li>
+                              <a href="#">10:30 AM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                11:00 AM
-                              </a>
+                            <li>
+                              <a href="#">11:00 AM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                11:30 AM
-                              </a>
+                            <li>
+                              <a href="#">11:30 AM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                12:00 PM
-                              </a>
+                            <li>
+                              <a href="#">12:00 PM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                12:30 PM
-                              </a>
+                            <li>
+                              <a href="#">12:30 PM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                1:00 PM
-                              </a>
+                            <li>
+                              <a href="#">1:00 PM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                1:30 PM
-                              </a>
+                            <li>
+                              <a href="#">1:30 PM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                2:00 PM
-                              </a>
+                            <li>
+                              <a href="#">2:00 PM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                2:30 PM
-                              </a>
+                            <li>
+                              <a href="#">2:30 PM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                3:00 PM
-                              </a>
+                            <li>
+                              <a href="#">3:00 PM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                3:30 PM
-                              </a>
+                            <li>
+                              <a href="#">3:30 PM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                4:00 PM
-                              </a>
+                            <li>
+                              <a href="#">4:00 PM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                4:30 PM
-                              </a>
+                            <li>
+                              <a href="#">4:30 PM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                5:00 PM
-                              </a>
+                            <li>
+                              <a href="#">5:00 PM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                5:30 PM
-                              </a>
+                            <li>
+                              <a href="#">5:30 PM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                6:00 PM
-                              </a>
+                            <li>
+                              <a href="#">6:00 PM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                6:30 PM
-                              </a>
+                            <li>
+                              <a href="#">6:30 PM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                7:00 PM
-                              </a>
+                            <li>
+                              <a href="#">7:00 PM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                7:30 PM
-                              </a>
+                            <li>
+                              <a href="#">7:30 PM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                8:00 PM
-                              </a>
+                            <li>
+                              <a href="#">8:00 PM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                8:30 PM
-                              </a>
+                            <li>
+                              <a href="#">8:30 PM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                9:00 PM
-                              </a>
+                            <li>
+                              <a href="#">9:00 PM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                9:30 PM
-                              </a>
+                            <li>
+                              <a href="#">9:30 PM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                10:00 PM
-                              </a>
+                            <li>
+                              <a href="#">10:00 PM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                10:30 PM
-                              </a>
+                            <li>
+                              <a href="#">10:30 PM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                11:00 PM
-                              </a>
+                            <li>
+                              <a href="#">11:00 PM</a>
                             </li>
-                            <li _ngcontent-pog-c20="">
-                              <a _ngcontent-pog-c20="" href="#">
-                                11:30 PM
-                              </a>
+                            <li>
+                              <a href="#">11:30 PM</a>
                             </li>
                           </ul>
                         </div>
                       </div>
                       <input
-                        _ngcontent-pog-c20=""
                         type="submit"
                         name="submit"
                         value="Request a book"
